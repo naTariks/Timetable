@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Timetable</string>
+    <string name="label">Bahnhof</string>
 </resources>
