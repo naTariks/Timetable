@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void enterStation(View view) {
+    public void btnGoClicked(View view) {
         Intent intent = new Intent(this, Abfahrtsplan.class);
         startActivity(intent);
     }
