@@ -14,12 +14,11 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import ch.stanrich.timetable.model.Bahnhof;
+import ch.stanrich.timetable.service.TransportOpenDateService;
 
 public class Abfahrtsplan extends AppCompatActivity {
 
     private ProgressBar progressBar;
-
-    private static final String TRANSPORT_API_URL = "http://transport.opendata.ch/v1/stationboard?station=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +35,13 @@ public class Abfahrtsplan extends AppCompatActivity {
         txtBahnhof.setText(bahnhof);
 
         progressBar.setVisibility(View.VISIBLE);
-        getVerbindungen(TRANSPORT_API_URL + bahnhof.toLowerCase(Locale.ROOT));
+
+        TransportOpenDateService.getVerbindungenVon(bahnhof.toLowerCase());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    private void getVerbindungen(String url) {
-
     }
 
     @Override
