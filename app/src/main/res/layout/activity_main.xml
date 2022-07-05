@@ -12,8 +12,7 @@
         android:id="@+id/txtWillkommen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:text="Willkommen"
+        android:text="@string/begruessung"
         android:textColor="@color/darkGray"
         android:textSize="20dp"
 
@@ -26,8 +25,7 @@
         android:id="@+id/txtEinfuehrung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:text="Dini Muetter isch fett!"
+        android:text="@string/tutorial"
         android:textColor="@color/darkGray"
         android:textSize="16dp"
 
@@ -49,6 +47,7 @@
         android:layout_width="match_parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bahnhofInput"
             android:maxLines="1"
             android:inputType="text"
             android:layout_width="match_parent"
@@ -59,7 +58,7 @@
             android:maxLength="50"
 
             android:textColorHint="#757575"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +69,7 @@
         android:onClick="btnGoClicked"
 
         android:textSize="16dp"
-        android:text="Go"
+        android:text="@string/btnGo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bahnhofTextField"

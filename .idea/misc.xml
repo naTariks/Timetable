@@ -5,8 +5,12 @@
       <map>
         <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
         <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/font/roboto.xml" value="0.40208333333333335" />
-        <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/layout/activity_abfahrtsplan.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/font/splash.xml" value="0.4010416666666667" />
+        <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/layout/activity_abfahrtsplan.xml" value="0.25" />
         <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/layout/activity_main.xml" value="0.3578125" />
+        <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/layout/activity_question_mark.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/layout/activity_verbindung.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/brichn/AndroidStudioProjects/Timetable/app/src/main/res/layout/sample_list_item.xml" value="0.358695652173913" />
       </map>
     </option>
   </component>

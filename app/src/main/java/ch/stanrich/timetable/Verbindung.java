@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 
 public class Verbindung extends AppCompatActivity {
@@ -13,7 +14,7 @@ public class Verbindung extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindung);
 
-        setTitle("Verbindung");
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">Verbindung</font>"));
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
