@@ -1,20 +1,33 @@
 package ch.stanrich.timetable.model;
 
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
-import java.sql.Date;
+import androidx.core.util.TimeUtils;
+
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import ch.stanrich.timetable.R;
+import ch.stanrich.timetable.helper.VerbindungJsonParser;
 
 public class Verbindung {
 
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
+
     private String startBahnhof;
-    private String startZeit;
+    private Date startZeit;
     private String startGleis;
 
     private String endBahnhof;
-    private String endZeit;
+    private Date endZeit;
     private String endGleis;
 
 
@@ -31,12 +44,18 @@ public class Verbindung {
         this.startBahnhof = startBahnhof;
     }
 
-    public String getStartZeit() {
+    public Date getStartZeit() {
         return startZeit;
     }
 
-    public void setStartZeit(String startZeit) {
-        this.startZeit = startZeit;
+    public void setStartZeit(String time) {
+        try {
+            this.startZeit = dateFormatter.parse(time);
+        } catch (ParseException e) {
+            Log.e(VerbindungJsonParser.class.getName(), "Time not parseable", e);
+            throw new RuntimeException(e);
+            //TODO perfect handling: propagate up to activity, handle there, display toast or similar error message to user explaining that something broke that has to be fixed by the developer
+        }
     }
 
     public String getStartGleis() {
@@ -55,12 +74,18 @@ public class Verbindung {
         this.endBahnhof = endBahnhof;
     }
 
-    public String getEndZeit() {
+    public Date getEndZeit() {
         return endZeit;
     }
 
-    public void setEndZeit(String endZeit) {
-        this.endZeit = endZeit;
+    public void setEndZeit(String time) {
+        try {
+            this.endZeit = dateFormatter.parse(time);
+        } catch (ParseException e) {
+            Log.e(VerbindungJsonParser.class.getName(), "Time not parseable", e);
+            throw new RuntimeException(e);
+            //TODO perfect handling: propagate up to activity, handle there, display toast or similar error message to user explaining that something broke that has to be fixed by the developer
+        }
     }
 
     public String getEndGleis() {
@@ -73,12 +98,8 @@ public class Verbindung {
 
     @Override
     public String toString() {
-        return parseTime(startZeit) + " " + endBahnhof + " " + startGleis;
+        return hourminutesFormatter.format(startZeit) + " " + endBahnhof + " " + startGleis;
     }
-
-   public String parseTime(String time) {
-        return time;
-   }
 
 
 }

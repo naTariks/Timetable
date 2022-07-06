@@ -1,8 +1,12 @@
 package ch.stanrich.timetable.helper;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
 import java.util.Iterator;
 
 import ch.stanrich.timetable.model.Bahnhof;

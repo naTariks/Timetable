@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 
+import ch.stanrich.timetable.adapter.AbfahrtsplanAdapter;
 import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Bahnhof;
 import ch.stanrich.timetable.model.Verbindung;
@@ -100,7 +101,7 @@ public class Abfahrtsplan extends AppCompatActivity {
     public void getVerbindungenVon(String abfahrtsOrt) {
         String requestUrl = TRANSPORT_API_URL + abfahrtsOrt;
 
-        final ArrayAdapter<Verbindung> verbindungInfosAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        final AbfahrtsplanAdapter verbindungInfosAdapter = new AbfahrtsplanAdapter(getApplicationContext(), new Bahnhof());
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
