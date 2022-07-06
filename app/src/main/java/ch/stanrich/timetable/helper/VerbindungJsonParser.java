@@ -29,13 +29,13 @@ public class VerbindungJsonParser {
             JSONObject stopObject = stationboardObject.getJSONObject("stop");
 
             verbindung.setStartBahnhof(stopObject.getJSONObject("station").getString("name"));
-            verbindung.setStartZeit(stopObject.getString("departureTimestamp"));
+            verbindung.setStartZeit(stopObject.getString("departure"));
             verbindung.setStartGleis(stopObject.getString("platform"));
             verbindung.setEndBahnhof(stationboardObject.getString("to"));
 
             JSONArray passListArray = stationboardObject.getJSONArray("passList");
             JSONObject passListObject = passListArray.getJSONObject(passListArray.length()-1);
-            verbindung.setEndZeit(passListObject.getString("arrivalTimestamp"));
+            verbindung.setEndZeit(passListObject.getString("arrival"));
 
             if (passListObject.getString("platform") != null){
                 verbindung.setEndGleis(passListObject.getString("platform"));

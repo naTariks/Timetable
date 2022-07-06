@@ -1,5 +1,12 @@
 package ch.stanrich.timetable.model;
 
+import android.widget.ArrayAdapter;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 public class Verbindung {
 
     private String startBahnhof;
@@ -9,6 +16,7 @@ public class Verbindung {
     private String endBahnhof;
     private String endZeit;
     private String endGleis;
+
 
     public Verbindung(){
 
@@ -62,4 +70,15 @@ public class Verbindung {
     public void setEndGleis(String endGleis) {
         this.endGleis = endGleis;
     }
+
+    @Override
+    public String toString() {
+        return parseTime(startZeit) + " " + endBahnhof + " " + startGleis;
+    }
+
+   public String parseTime(String time) {
+        return time;
+   }
+
+
 }

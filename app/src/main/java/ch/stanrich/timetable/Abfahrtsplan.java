@@ -124,6 +124,18 @@ public class Abfahrtsplan extends AppCompatActivity {
         });
         queue.add(stringRequest);
 
+        AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), VerbindungsDetail.class);
+                Verbindung selected = (Verbindung)parent.getItemAtPosition(position);
+
+                intent.putExtra("Bahnhof", selected.getEndBahnhof());
+                startActivity(intent);
+            }
+        };
+        ListView ka = findViewById(R.id.verbindungen);
+        ka.setOnItemClickListener(mListClickedHandler);
     }
 
 

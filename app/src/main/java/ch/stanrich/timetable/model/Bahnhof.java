@@ -45,4 +45,6 @@ public class Bahnhof {
     public void addVerbindung(Verbindung verbindung) {
         this.verbindungen.add(verbindung);
     }
+
+
 }
