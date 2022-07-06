@@ -19,7 +19,7 @@
             android:name=".QuestionMark"
             android:exported="false" />
         <activity
-            android:name=".Verbindung"
+            android:name=".VerbindungsDetail"
             android:exported="false" />
         <activity
             android:name=".Abfahrtsplan"

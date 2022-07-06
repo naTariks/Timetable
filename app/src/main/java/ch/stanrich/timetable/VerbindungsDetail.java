@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 
-public class Verbindung extends AppCompatActivity {
+public class VerbindungsDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verbindung);
+        setContentView(R.layout.activity_verbindungs_detail);
 
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">Verbindung</font>"));
 
