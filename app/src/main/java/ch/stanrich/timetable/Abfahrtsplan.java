@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -54,7 +56,6 @@ public class Abfahrtsplan extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        getVerbindungenVon(bahnhof.toLowerCase());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -75,6 +76,12 @@ public class Abfahrtsplan extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (!isNetworkConnectionAvailable()) {
+            generateAlertDialog(true);
+        }
+        else {
+            getVerbindungenVon(bahnhof.toLowerCase());
+        }
 
     }
 
@@ -142,6 +149,18 @@ public class Abfahrtsplan extends AppCompatActivity {
         };
         ListView ka = findViewById(R.id.verbindungen);
         ka.setOnItemClickListener(mListClickedHandler);
+    }
+
+    private boolean isNetworkConnectionAvailable() {
+        ConnectivityManager connectivityService = (ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connectivityService.getActiveNetworkInfo();
+
+
+
+
+        return null != networkInfo && networkInfo.isConnected();
     }
 
 

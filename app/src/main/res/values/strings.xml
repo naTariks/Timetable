@@ -3,6 +3,6 @@
     <string name="label">Bahnhof</string>
     <string name="Bahnhof">Bern</string>
     <string name="begruessung">Willkommen</string>
-    <string name="tutorial">Dini Muetter isch fett!</string>
+    <string name="tutorial">Geben Sie einen beliebigen Schweizer Bahnhof ein und sehen Sie die nächsten Verbindungen ab diesem.</string>
     <string name="btnGo">Go</string>
 </resources>

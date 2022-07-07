@@ -1,5 +1,7 @@
 package ch.stanrich.timetable.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -17,7 +19,7 @@ import java.util.TimeZone;
 import ch.stanrich.timetable.R;
 import ch.stanrich.timetable.helper.VerbindungJsonParser;
 
-public class Verbindung {
+public class Verbindung implements Parcelable {
 
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     static {
@@ -37,6 +39,44 @@ public class Verbindung {
 
     }
 
+
+    protected Verbindung(Parcel in) {
+        startBahnhof = in.readString();
+        startZeit = new Date(in.readLong());
+        startGleis = in.readString();
+
+        endBahnhof = in.readString();
+        endZeit = new Date(in.readLong());
+        endGleis = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(startBahnhof);
+        dest.writeLong(startZeit.getTime());
+        dest.writeString(startGleis);
+
+        dest.writeString(endBahnhof);
+        dest.writeLong(endZeit.getTime());
+        dest.writeString(endGleis);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Verbindung> CREATOR = new Creator<Verbindung>() {
+        @Override
+        public Verbindung createFromParcel(Parcel in) {
+            return new Verbindung(in);
+        }
+
+        @Override
+        public Verbindung[] newArray(int size) {
+            return new Verbindung[size];
+        }
+    };
 
     public String getStartBahnhof() {
         return startBahnhof;
@@ -97,5 +137,6 @@ public class Verbindung {
     public void setEndGleis(String endGleis) {
         this.endGleis = endGleis;
     }
+
 
 }
