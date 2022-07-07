@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import ch.stanrich.timetable.adapter.AbfahrtsplanAdapter;
+import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Verbindung;
 
 public class VerbindungsDetail extends AppCompatActivity {
@@ -66,7 +68,14 @@ public class VerbindungsDetail extends AppCompatActivity {
 
 
         String startZeit = hourminutesFormatter.format(verbindung.getStartZeit());
-        String endZeit = hourminutesFormatter.format(verbindung.getEndZeit());
+
+        Date endZeitDate = verbindung.getEndZeit();
+        String endZeit;
+        if(endZeitDate.getTime() == VerbindungJsonParser.INVALID_TIME) {
+            endZeit = VerbindungJsonParser.UNKNOWN_DATA;
+        } else {
+            endZeit = hourminutesFormatter.format(endZeitDate);
+        }
 
 
         txtZeitInfo.setText("Zeit");
@@ -74,11 +83,11 @@ public class VerbindungsDetail extends AppCompatActivity {
         txtGleisInfo.setText("Gleis");
 
         txtStartZeit.setText(startZeit);
-        txtStartBahnhof.setText(verbindung.getStartBahnhof());
+        txtStartBahnhof.setText(AbfahrtsplanAdapter.VON + verbindung.getStartBahnhof() + verbindung.getZugArt());
         txtStartGleis.setText(verbindung.getStartGleis());
 
         txtEndZeit.setText(endZeit);
-        txtEndBahnhof.setText(verbindung.getEndBahnhof());
+        txtEndBahnhof.setText(AbfahrtsplanAdapter.NACH + verbindung.getEndBahnhof() + verbindung.getZugArt());
         txtEndGleis.setText(verbindung.getEndGleis());
 
     }
@@ -91,6 +100,11 @@ public class VerbindungsDetail extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void btnHelpClicked(View view) {
+        Intent intent = new Intent(this, HelpImpressum.class);
+        startActivity(intent);
     }
 
 }

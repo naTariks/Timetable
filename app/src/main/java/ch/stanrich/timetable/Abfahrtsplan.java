@@ -30,6 +30,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 
+import java.text.ParseException;
+
 import ch.stanrich.timetable.adapter.AbfahrtsplanAdapter;
 import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Bahnhof;
@@ -78,7 +80,7 @@ public class Abfahrtsplan extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (!isNetworkConnectionAvailable()) {
-            generateAlertDialog(true);
+            generateAlertDialog(1);
         }
         else {
             getVerbindungenVon(bahnhof.toLowerCase());
@@ -86,7 +88,7 @@ public class Abfahrtsplan extends AppCompatActivity {
 
     }
 
-    public void generateAlertDialog(boolean noInternet){
+    public void generateAlertDialog(int id){
         progressBar.setVisibility(View.GONE);
         AlertDialog.Builder dialogBuilder;
         dialogBuilder = new AlertDialog.Builder(this);
@@ -96,11 +98,19 @@ public class Abfahrtsplan extends AppCompatActivity {
                 finish();
             }
         });
-        if (noInternet){
-            dialogBuilder.setMessage("Es konnte keine Verbindung zum Internet hergestellt werden. Versuchen Sie es später nochmals").setTitle("Fehler");
-        }
-        else{
-            dialogBuilder.setMessage("Der eingegebene Bahnhof, " + bahnhof + ", konnte nicht gefunden werden.").setTitle("Fehler");
+        switch (id) {
+            case 1:
+                dialogBuilder.setMessage("Es konnte keine Verbindung zum Internet hergestellt werden. Versuchen Sie es später nochmals").setTitle("Fehler");
+                break;
+            case 2:
+                dialogBuilder.setMessage("Der eingegebene Bahnhof, " + bahnhof + ", konnte nicht gefunden werden.").setTitle("Fehler");
+                break;
+            case 3:
+                dialogBuilder.setMessage("Systemfehler. Bitte wenden Sie sich an einen Entwickler.").setTitle("Fehler");
+                break;
+            default:
+                dialogBuilder.setMessage("Leider ist ein Fehler aufgetretten. Versuchen Sie es später nochmals.").setTitle("Fehler");
+                break;
         }
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
@@ -119,7 +129,7 @@ public class Abfahrtsplan extends AppCompatActivity {
                     Bahnhof bahnhof = VerbindungJsonParser.createTimetableFromJsonString(response);
 
                     if(bahnhof.getVerbindung().isEmpty()) {
-                        generateAlertDialog(false);
+                        generateAlertDialog(2);
                     }
 
                     verbindungInfosAdapter.addAll(bahnhof.getVerbindung());
@@ -127,13 +137,17 @@ public class Abfahrtsplan extends AppCompatActivity {
                     timeTable.setAdapter(verbindungInfosAdapter);
                     progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
-                    generateAlertDialog(false);
+                    generateAlertDialog(2);
+
+                }catch (ParseException e) {
+                    generateAlertDialog(3);
+                    Log.e(VerbindungJsonParser.class.getName(), "Time from API not parseable anymore", e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                generateAlertDialog(false);
+                generateAlertDialog(2);
             }
         });
         queue.add(stringRequest);
@@ -162,6 +176,9 @@ public class Abfahrtsplan extends AppCompatActivity {
         return null != networkInfo && networkInfo.isConnected();
     }
 
-
+    public void btnHelpClicked(View view) {
+        Intent intent = new Intent(this, HelpImpressum.class);
+        startActivity(intent);
+    }
 
 }

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ch.stanrich.timetable">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Timetable"
         tools:targetApi="31">
+        <activity
+            android:name=".HelpImpressum"
+            android:exported="false" />
         <activity
             android:name=".VerbindungsDetail"
             android:exported="false" />

@@ -17,10 +17,10 @@ public class VerbindungJsonParser {
 
     private final static String STATION_KEY = "station";
     private final static String STATIONBOARD_KEY = "stationboard";
-    private final static String DEFAULT_TIME = "1970-01-01T00:00:00Z";
-    private final static String UNBEKANNT = "N/A";
+    public final static String UNKNOWN_DATA = "unb.";
+    public final static long INVALID_TIME = 0;
 
-    public static Bahnhof createTimetableFromJsonString(String timetableJsonString) throws JSONException{
+    public static Bahnhof createTimetableFromJsonString(String timetableJsonString) throws JSONException, ParseException {
         Bahnhof bahnhof = new Bahnhof();
 
         JSONObject timetableObject = new JSONObject(timetableJsonString);
@@ -31,7 +31,7 @@ public class VerbindungJsonParser {
             bahnhof.setName(stationObject.getString("name"));
         }
         else {
-            bahnhof.setName(UNBEKANNT);
+            bahnhof.setName(UNKNOWN_DATA);
         }
 
         JSONArray stationboardArray = timetableObject.getJSONArray(STATIONBOARD_KEY);
@@ -46,28 +46,35 @@ public class VerbindungJsonParser {
                     verbindung.setStartBahnhof(stopObject.getJSONObject("station").getString("name"));
                 }
                 else {
-                    verbindung.setStartBahnhof(UNBEKANNT);
+                    verbindung.setStartBahnhof(UNKNOWN_DATA);
                 }
 
                 if (!stopObject.isNull("departure")){
                     verbindung.setStartZeit(stopObject.getString("departure"));
                 }
                 else {
-                    verbindung.setStartZeit(DEFAULT_TIME);
+                    verbindung.setStartZeit(INVALID_TIME);
                 }
 
                 if (!stopObject.isNull("platform")) {
                     verbindung.setStartGleis(stopObject.getString("platform"));
                 }
                 else {
-                    verbindung.setStartGleis(UNBEKANNT);
+                    verbindung.setStartGleis(UNKNOWN_DATA);
                 }
 
                 if (!stationboardObject.isNull("to")) {
                     verbindung.setEndBahnhof(stationboardObject.getString("to"));
                 }
                 else {
-                    verbindung.setEndBahnhof(UNBEKANNT);
+                    verbindung.setEndBahnhof(UNKNOWN_DATA);
+                }
+
+                if (!stationboardObject.isNull("category")){
+                    verbindung.setZugArt(" (" + stationboardObject.getString("category") + ")");
+                }
+                else {
+                    verbindung.setZugArt(null);
                 }
 
                 JSONArray passListArray = stationboardObject.getJSONArray("passList");
@@ -77,7 +84,7 @@ public class VerbindungJsonParser {
                     verbindung.setEndZeit(passListObject.getString("arrival"));
                 }
                 else {
-                    verbindung.setEndZeit(DEFAULT_TIME);
+                    verbindung.setEndZeit(INVALID_TIME);
                 }
 
                 if (!passListObject.isNull("platform")){
@@ -87,7 +94,7 @@ public class VerbindungJsonParser {
                     verbindung.setEndGleis(passListObject.getJSONObject("prognosis").getString("platform"));
                 }
                 else{
-                    verbindung.setEndGleis(UNBEKANNT);
+                    verbindung.setEndGleis(UNKNOWN_DATA);
                 }
 
                 bahnhof.addVerbindung(verbindung);

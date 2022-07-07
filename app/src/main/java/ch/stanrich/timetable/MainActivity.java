@@ -29,4 +29,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Bahnhof", bahnhof);
         startActivity(intent);
     }
+
+    public void btnHelpClicked(View view) {
+        Intent intent = new Intent(this, HelpImpressum.class);
+        startActivity(intent);
+    }
 }

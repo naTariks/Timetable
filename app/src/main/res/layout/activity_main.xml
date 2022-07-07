@@ -77,4 +77,18 @@
         app:layout_constraintTop_toBottomOf="@id/bahnhofTextField"
         android:layout_marginTop="56dp"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+
+        app:fabSize="mini"
+        android:layout_marginBottom="16dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:onClick="btnHelpClicked"
+
+        android:src="@drawable/questionmark"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

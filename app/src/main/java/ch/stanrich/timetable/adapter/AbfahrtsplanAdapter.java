@@ -20,6 +20,9 @@ import ch.stanrich.timetable.model.Verbindung;
 
 public class AbfahrtsplanAdapter extends ArrayAdapter<Verbindung> {
 
+    public static final String VON = "von ";
+    public static final String NACH = "nach ";
+
     private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
     static {
         hourminutesFormatter.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
@@ -40,8 +43,8 @@ public class AbfahrtsplanAdapter extends ArrayAdapter<Verbindung> {
 
         Verbindung verbindung = getItem(position);
 
-        txtTime.setText(hourminutesFormatter.format(verbindung.getEndZeit()));
-        txtDestination.setText(verbindung.getEndBahnhof());
+        txtTime.setText(hourminutesFormatter.format(verbindung.getStartZeit()));
+        txtDestination.setText(NACH + verbindung.getEndBahnhof() + verbindung.getZugArt());
         txtGleis.setText(verbindung.getStartGleis());
 
         return rowView;

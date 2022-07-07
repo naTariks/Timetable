@@ -34,6 +34,16 @@ public class Verbindung implements Parcelable {
     private String endBahnhof;
     private String endGleis;
 
+    public String getZugArt() {
+        return zugArt;
+    }
+
+    public void setZugArt(String zugArt) {
+        this.zugArt = zugArt;
+    }
+
+    private String zugArt;
+
 
     public Verbindung(){
 
@@ -48,6 +58,8 @@ public class Verbindung implements Parcelable {
         endZeit = new Date(in.readLong());
         endBahnhof = in.readString();
         endGleis = in.readString();
+
+        zugArt = in.readString();
     }
 
     @Override
@@ -59,6 +71,8 @@ public class Verbindung implements Parcelable {
         dest.writeLong(endZeit.getTime());
         dest.writeString(endBahnhof);
         dest.writeString(endGleis);
+
+        dest.writeString(zugArt);
     }
 
     @Override
@@ -90,14 +104,12 @@ public class Verbindung implements Parcelable {
         return startZeit;
     }
 
-    public void setStartZeit(String time) {
-        try {
-            this.startZeit = dateFormatter.parse(time);
-        } catch (ParseException e) {
-            Log.e(VerbindungJsonParser.class.getName(), "Time not parseable", e);
-            throw new RuntimeException(e);
-            //TODO perfect handling: propagate up to activity, handle there, display toast or similar error message to user explaining that something broke that has to be fixed by the developer
-        }
+    public void setStartZeit(String time) throws ParseException {
+        this.startZeit = dateFormatter.parse(time);
+    }
+
+    public void setStartZeit(long timestamp) {
+        this.startZeit = new Date(timestamp);
     }
 
     public String getStartGleis() {
@@ -120,14 +132,12 @@ public class Verbindung implements Parcelable {
         return endZeit;
     }
 
-    public void setEndZeit(String time) {
-        try {
-            this.endZeit = dateFormatter.parse(time);
-        } catch (ParseException e) {
-            Log.e(VerbindungJsonParser.class.getName(), "Time not parseable", e);
-            throw new RuntimeException(e);
-            //TODO perfect handling: propagate up to activity, handle there, display toast or similar error message to user explaining that something broke that has to be fixed by the developer
-        }
+    public void setEndZeit(String time) throws ParseException{
+        this.endZeit = dateFormatter.parse(time);
+    }
+
+    public void setEndZeit(long timestamp) {
+        this.endZeit = new Date(timestamp);
     }
 
     public String getEndGleis() {
