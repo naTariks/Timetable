@@ -18,7 +18,7 @@ public class VerbindungJsonParser {
     private final static String STATION_KEY = "station";
     private final static String STATIONBOARD_KEY = "stationboard";
     private final static String DEFAULT_TIME = "1970-01-01T00:00:00Z";
-    private final static String UNBEKANNT = "Unbekannt";
+    private final static String UNBEKANNT = "N/A";
 
     public static Bahnhof createTimetableFromJsonString(String timetableJsonString) throws JSONException{
         Bahnhof bahnhof = new Bahnhof();

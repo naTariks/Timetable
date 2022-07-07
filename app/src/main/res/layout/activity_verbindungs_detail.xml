@@ -22,6 +22,54 @@
         />
 
     <TextView
+        android:id="@+id/txtZeitInfo"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtBahnhof" />
+
+    <TextView
+        android:id="@+id/txtBahnhofInfo"
+        android:layout_width="270dp"
+        android:layout_height="48dp"
+
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toStartOf="@+id/txtGleisInfo"
+        app:layout_constraintStart_toEndOf="@+id/txtZeitInfo"
+        app:layout_constraintTop_toBottomOf="@id/txtBahnhof" />
+
+    <TextView
+        android:id="@+id/txtGleisInfo"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+
+        android:gravity="right|center_vertical"
+        android:textColor="@color/main_grey"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtBahnhof"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_grey"
+
+        app:layout_constraintTop_toBottomOf="@+id/txtBahnhofInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtStartBahnhof"/>
+
+    <TextView
         android:id="@+id/txtStartZeit"
         android:layout_width="50dp"
         android:layout_height="48dp"
@@ -30,7 +78,7 @@
         android:textColor="@color/main_grey"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtBahnhof" />
+        app:layout_constraintTop_toBottomOf="@id/txtZeitInfo" />
 
     <TextView
         android:id="@+id/txtStartBahnhof"
@@ -43,7 +91,7 @@
 
         app:layout_constraintEnd_toStartOf="@+id/txtStartGleis"
         app:layout_constraintStart_toEndOf="@+id/txtStartZeit"
-        app:layout_constraintTop_toBottomOf="@id/txtBahnhof" />
+        app:layout_constraintTop_toBottomOf="@id/txtBahnhofInfo" />
 
     <TextView
         android:id="@+id/txtStartGleis"
@@ -54,7 +102,16 @@
         android:textColor="@color/main_grey"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtBahnhof"/>
+        app:layout_constraintTop_toBottomOf="@id/txtGleisInfo"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/main_grey"
+
+        app:layout_constraintTop_toBottomOf="@+id/txtStartBahnhof"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/txtEndZeit"

@@ -26,12 +26,12 @@ public class Verbindung implements Parcelable {
         dateFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 
-    private String startBahnhof;
     private Date startZeit;
+    private String startBahnhof;
     private String startGleis;
 
-    private String endBahnhof;
     private Date endZeit;
+    private String endBahnhof;
     private String endGleis;
 
 
@@ -41,23 +41,23 @@ public class Verbindung implements Parcelable {
 
 
     protected Verbindung(Parcel in) {
-        startBahnhof = in.readString();
         startZeit = new Date(in.readLong());
+        startBahnhof = in.readString();
         startGleis = in.readString();
 
-        endBahnhof = in.readString();
         endZeit = new Date(in.readLong());
+        endBahnhof = in.readString();
         endGleis = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(startBahnhof);
         dest.writeLong(startZeit.getTime());
+        dest.writeString(startBahnhof);
         dest.writeString(startGleis);
 
-        dest.writeString(endBahnhof);
         dest.writeLong(endZeit.getTime());
+        dest.writeString(endBahnhof);
         dest.writeString(endGleis);
     }
 

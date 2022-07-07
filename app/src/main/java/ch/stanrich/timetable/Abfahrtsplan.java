@@ -145,7 +145,7 @@ public class Abfahrtsplan extends AppCompatActivity {
                 Verbindung selected = (Verbindung)parent.getItemAtPosition(position);
 
                 intent.putExtra("Bahnhof", selected.getEndBahnhof());
-                intent.putExtra("Verbindung", (Parcelable) selected);
+                intent.putExtra("Verbindung", selected);
                 startActivity(intent);
             }
         };
@@ -158,9 +158,6 @@ public class Abfahrtsplan extends AppCompatActivity {
                 getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo networkInfo = connectivityService.getActiveNetworkInfo();
-
-
-
 
         return null != networkInfo && networkInfo.isConnected();
     }

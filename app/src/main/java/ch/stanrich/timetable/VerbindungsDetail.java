@@ -3,6 +3,7 @@ package ch.stanrich.timetable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -11,10 +12,19 @@ import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 import ch.stanrich.timetable.adapter.AbfahrtsplanAdapter;
 import ch.stanrich.timetable.model.Verbindung;
 
 public class VerbindungsDetail extends AppCompatActivity {
+
+    private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
+    static {
+        hourminutesFormatter.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
+    }
 
     private String bahnhof;
     private Verbindung verbindung;
@@ -26,7 +36,7 @@ public class VerbindungsDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         bahnhof = intent.getStringExtra("Bahnhof");
-        verbindung = intent.getParcelableExtra("Verbindung");
+        verbindung = intent.getExtras().getParcelable("Verbindung");
 
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">Verbindung</font>"));
 
@@ -40,7 +50,12 @@ public class VerbindungsDetail extends AppCompatActivity {
         addInfos();
     }
 
+    @SuppressLint("SetTextI18n")
     private void addInfos() {
+        TextView txtZeitInfo = findViewById(R.id.txtZeitInfo);
+        TextView txtBahnhofInfo = findViewById(R.id.txtBahnhofInfo);
+        TextView txtGleisInfo = findViewById(R.id.txtGleisInfo);
+
         TextView txtStartZeit = findViewById(R.id.txtStartZeit);
         TextView txtStartBahnhof = findViewById(R.id.txtStartBahnhof);
         TextView txtStartGleis = findViewById(R.id.txtStartGleis);
@@ -50,11 +65,19 @@ public class VerbindungsDetail extends AppCompatActivity {
         TextView txtEndGleis = findViewById(R.id.txtEndGleis);
 
 
-        txtStartZeit.setText(verbindung.getStartZeit().toString());
+        String startZeit = hourminutesFormatter.format(verbindung.getStartZeit());
+        String endZeit = hourminutesFormatter.format(verbindung.getEndZeit());
+
+
+        txtZeitInfo.setText("Zeit");
+        txtBahnhofInfo.setText("Bahnhof");
+        txtGleisInfo.setText("Gleis");
+
+        txtStartZeit.setText(startZeit);
         txtStartBahnhof.setText(verbindung.getStartBahnhof());
         txtStartGleis.setText(verbindung.getStartGleis());
 
-        txtEndZeit.setText(verbindung.getEndZeit().toString());
+        txtEndZeit.setText(endZeit);
         txtEndBahnhof.setText(verbindung.getEndBahnhof());
         txtEndGleis.setText(verbindung.getEndGleis());
 

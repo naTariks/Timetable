@@ -40,8 +40,6 @@ public class AbfahrtsplanAdapter extends ArrayAdapter<Verbindung> {
 
         Verbindung verbindung = getItem(position);
 
-        Log.d(VerbindungJsonParser.class.getName(), verbindung.getStartZeit().toString());
-
         txtTime.setText(hourminutesFormatter.format(verbindung.getEndZeit()));
         txtDestination.setText(verbindung.getEndBahnhof());
         txtGleis.setText(verbindung.getStartGleis());
