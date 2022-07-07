@@ -21,15 +21,87 @@
         android:textSize="48dp"
         />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/infos"
+    <TextView
+        android:id="@+id/txtStartZeit"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
 
-        tools:listitem="@layout/support_simple_spinner_dropdown_item"
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtBahnhof" />
+
+    <TextView
+        android:id="@+id/txtStartBahnhof"
+        android:layout_width="270dp"
+        android:layout_height="48dp"
+
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
+
+        app:layout_constraintEnd_toStartOf="@+id/txtStartGleis"
+        app:layout_constraintStart_toEndOf="@+id/txtStartZeit"
+        app:layout_constraintTop_toBottomOf="@id/txtBahnhof" />
+
+    <TextView
+        android:id="@+id/txtStartGleis"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+
+        android:gravity="right|center_vertical"
+        android:textColor="@color/main_grey"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtBahnhof"/>
+
+    <TextView
+        android:id="@+id/txtEndZeit"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtStartZeit" />
+
+    <TextView
+        android:id="@+id/txtEndBahnhof"
+        android:layout_width="270dp"
+        android:layout_height="48dp"
+
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
+
+        app:layout_constraintEnd_toStartOf="@+id/txtEndGleis"
+        app:layout_constraintStart_toEndOf="@+id/txtEndZeit"
+        app:layout_constraintTop_toBottomOf="@id/txtStartBahnhof" />
+
+    <TextView
+        android:id="@+id/txtEndGleis"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+
+        android:gravity="right|center_vertical"
+        android:textColor="@color/main_grey"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtStartGleis"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/badilogo"
+        android:src="@drawable/candydrive"
+        android:adjustViewBounds="true"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:layout_marginBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -144,6 +145,7 @@ public class Abfahrtsplan extends AppCompatActivity {
                 Verbindung selected = (Verbindung)parent.getItemAtPosition(position);
 
                 intent.putExtra("Bahnhof", selected.getEndBahnhof());
+                intent.putExtra("Verbindung", (Parcelable) selected);
                 startActivity(intent);
             }
         };
@@ -162,6 +164,7 @@ public class Abfahrtsplan extends AppCompatActivity {
 
         return null != networkInfo && networkInfo.isConnected();
     }
+
 
 
 }
