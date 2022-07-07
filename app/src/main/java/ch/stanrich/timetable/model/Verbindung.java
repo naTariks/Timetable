@@ -20,7 +20,9 @@ import ch.stanrich.timetable.helper.VerbindungJsonParser;
 public class Verbindung {
 
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-    private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
+    static {
+        dateFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+    }
 
     private String startBahnhof;
     private Date startZeit;
@@ -95,11 +97,5 @@ public class Verbindung {
     public void setEndGleis(String endGleis) {
         this.endGleis = endGleis;
     }
-
-    @Override
-    public String toString() {
-        return hourminutesFormatter.format(startZeit) + " " + endBahnhof + " " + startGleis;
-    }
-
 
 }

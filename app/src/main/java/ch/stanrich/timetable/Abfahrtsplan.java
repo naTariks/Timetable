@@ -109,6 +109,11 @@ public class Abfahrtsplan extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     Bahnhof bahnhof = VerbindungJsonParser.createTimetableFromJsonString(response);
+
+                    if(bahnhof.getVerbindung().isEmpty()) {
+                        generateAlertDialog(false);
+                    }
+
                     verbindungInfosAdapter.addAll(bahnhof.getVerbindung());
                     ListView timeTable = findViewById(R.id.verbindungen);
                     timeTable.setAdapter(verbindungInfosAdapter);

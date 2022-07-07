@@ -6,23 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextClock
+    <TextView
         android:id="@+id/txtTime"
         android:layout_width="50dp"
         android:layout_height="48dp"
 
         android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
 
-        android:format24Hour="HH:mm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtDestination"
         android:layout_width="268dp"
         android:layout_height="48dp"
+
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/main_grey"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtGleis"
@@ -34,8 +38,8 @@
         android:layout_width="50dp"
         android:layout_height="48dp"
 
-        android:gravity="right"
-
+        android:gravity="right|center_vertical"
+        android:textColor="@color/main_grey"
         android:layout_marginRight="16dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
