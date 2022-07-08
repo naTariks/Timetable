@@ -20,6 +20,9 @@ import ch.stanrich.timetable.adapter.AbfahrtsplanAdapter;
 import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Verbindung;
 
+/**
+ * The type Verbindungs detail.
+ */
 public class VerbindungsDetail extends AppCompatActivity {
 
     private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
@@ -38,13 +41,16 @@ public class VerbindungsDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         bahnhof = intent.getStringExtra("Bahnhof");
+        //getting the Verbindung. This is possible with Parcel(able)
         verbindung = intent.getExtras().getParcelable("Verbindung");
 
+        //setting the Title Color in a cursed way
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">Verbindung</font>"));
 
         TextView txtBahnhof = findViewById(R.id.txtBahnhof);
         txtBahnhof.setText(bahnhof);
 
+        //Setting the UpButton
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,6 +58,9 @@ public class VerbindungsDetail extends AppCompatActivity {
         addInfos();
     }
 
+    /**
+     * Sets Click Listener for the Floating Action Button
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -60,6 +69,9 @@ public class VerbindungsDetail extends AppCompatActivity {
         fltHelp.setOnClickListener(v -> fltOpenHelp());
     }
 
+    /**
+     * Fills the 9 fields in the DetailAnsicht with the Data from this Verbindung.
+     */
     @SuppressLint("SetTextI18n")
     private void addInfos() {
         TextView txtZeitInfo = findViewById(R.id.txtZeitInfo);
@@ -79,6 +91,7 @@ public class VerbindungsDetail extends AppCompatActivity {
 
         Date endZeitDate = verbindung.getEndZeit();
         String endZeit;
+
         if (endZeitDate.getTime() == VerbindungJsonParser.INVALID_TIME) {
             endZeit = VerbindungJsonParser.UNKNOWN_DATA;
         } else {
@@ -100,6 +113,11 @@ public class VerbindungsDetail extends AppCompatActivity {
 
     }
 
+    /**
+     * Is responsible for going one Activity Back if clicked on UpButton
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -110,6 +128,9 @@ public class VerbindungsDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Is called if clicked on Floating Action Button with Question Mark and opens HelpImpressum Activity.
+     */
     private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
         startActivity(intent);

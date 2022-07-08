@@ -21,20 +21,12 @@ public class Bahnhof {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public List<Verbindung> getVerbindung() {
+    public List<Verbindung> getVerbindungen() {
         return verbindungen;
-    }
-
-    public void setVerbindung(List<Verbindung> verbindung) {
-        this.verbindungen = verbindung;
     }
 
     public void addVerbindung(Verbindung verbindung) {

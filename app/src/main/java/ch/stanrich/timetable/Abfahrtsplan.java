@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,9 +35,12 @@ import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Bahnhof;
 import ch.stanrich.timetable.model.Verbindung;
 
+/**
+ * The type Abfahrtsplan.
+ */
 public class Abfahrtsplan extends AppCompatActivity {
 
-    private final String TRANSPORT_API_URL = "https://transport.opendata.ch/v1/stationboard?station=";
+    private final String STATIONBOARD_STATION_API_URL = "https://transport.opendata.ch/v1/stationboard?station=";
     private ProgressBar progressBar;
     private String bahnhof;
 
@@ -51,6 +53,7 @@ public class Abfahrtsplan extends AppCompatActivity {
         Intent intent = getIntent();
         bahnhof = intent.getStringExtra("Bahnhof");
 
+        //setting the Title Color in a cursed way
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">Abfahrtsplan</font>"));
 
         TextView txtBahnhof = findViewById(R.id.txtBahnhof);
@@ -58,13 +61,18 @@ public class Abfahrtsplan extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-
+        //Setting the UpButton
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
+    /**
+     * Is responsible for going one Activity Back if clicked on UpButton
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -75,6 +83,9 @@ public class Abfahrtsplan extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Calls isNetworkConnectionAvailable() and generates an Alert if not. Set Click Listener for Floating Action Button.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -89,7 +100,13 @@ public class Abfahrtsplan extends AppCompatActivity {
 
     }
 
+    /**
+     * Generate an Alert and looks with the given param what the problem is and returns an error Message for the specific problem
+     *
+     * @param id the id
+     */
     public void generateAlertDialog(int id) {
+        //Building the AlertDialog and hide the ProgressBar
         progressBar.setVisibility(View.GONE);
         AlertDialog.Builder dialogBuilder;
         dialogBuilder = new AlertDialog.Builder(this);
@@ -100,16 +117,16 @@ public class Abfahrtsplan extends AppCompatActivity {
             }
         });
         switch (id) {
-            case 1:
+            case 1: //No Internet
                 dialogBuilder.setMessage("Es konnte keine Verbindung zum Internet hergestellt werden. Versuchen Sie es später nochmals").setTitle("Fehler");
                 break;
-            case 2:
+            case 2: //Given Bahnhof not found
                 dialogBuilder.setMessage("Der eingegebene Bahnhof, " + bahnhof + ", konnte nicht gefunden werden.").setTitle("Fehler");
                 break;
-            case 3:
+            case 3: //Systemfehler, Actually just a problem with parsing the departure or arrival Time
                 dialogBuilder.setMessage("Systemfehler. Bitte wenden Sie sich an einen Entwickler.").setTitle("Fehler");
                 break;
-            default:
+            default: //Any other Error. Not used at the moment
                 dialogBuilder.setMessage("Leider ist ein Fehler aufgetretten. Versuchen Sie es später nochmals.").setTitle("Fehler");
                 break;
         }
@@ -117,57 +134,59 @@ public class Abfahrtsplan extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Gets Verbindungen for inserted Bahnhof with calling the API and call the JSON Parser. Handles also the JSONException and a ParseException.
+     *
+     * @param abfahrtsOrt the abfahrts ort
+     */
     public void getVerbindungenVon(String abfahrtsOrt) {
-        String requestUrl = TRANSPORT_API_URL + abfahrtsOrt;
+        String requestUrl = STATIONBOARD_STATION_API_URL + abfahrtsOrt;
 
+        //Using our selfmade Adapter. See AbfahrtsplanAdapter
         final AbfahrtsplanAdapter verbindungInfosAdapter = new AbfahrtsplanAdapter(getApplicationContext(), new Bahnhof());
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Bahnhof bahnhof = VerbindungJsonParser.createTimetableFromJsonString(response);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl, response -> {
+            //Try to Parse the JSON String or else it will generate an "Given Bahnhof not found" or "Time not parsable" Alert. Depending on the thrown Exception
+            try {
+                Bahnhof bahnhof = VerbindungJsonParser.createTimetableFromJsonString(response);
 
-                    if (bahnhof.getVerbindung().isEmpty()) {
-                        generateAlertDialog(2);
-                    }
-
-                    verbindungInfosAdapter.addAll(bahnhof.getVerbindung());
-                    ListView timeTable = findViewById(R.id.verbindungen);
-                    timeTable.setAdapter(verbindungInfosAdapter);
-                    progressBar.setVisibility(View.GONE);
-                } catch (JSONException e) {
+                if (bahnhof.getVerbindungen().isEmpty()) {
                     generateAlertDialog(2);
-
-                } catch (ParseException e) {
-                    generateAlertDialog(3);
-                    Log.e(VerbindungJsonParser.class.getName(), "Time from API not parseable anymore", e);
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+
+                verbindungInfosAdapter.addAll(bahnhof.getVerbindungen());
+                ListView timeTable = findViewById(R.id.verbindungen);
+                timeTable.setAdapter(verbindungInfosAdapter);
+                progressBar.setVisibility(View.GONE);
+            } catch (JSONException e) {
                 generateAlertDialog(2);
+
+            } catch (ParseException e) {
+                generateAlertDialog(3);
+                Log.e(VerbindungJsonParser.class.getName(), "Time from API not parsable anymore", e);
             }
-        });
+        }, error -> generateAlertDialog(2));
         queue.add(stringRequest);
 
-        AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), VerbindungsDetail.class);
-                Verbindung selected = (Verbindung) parent.getItemAtPosition(position);
+        //Definition on what happens when clicked on ListItem
+        AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
+            Intent intent = new Intent(getApplicationContext(), VerbindungsDetail.class);
+            Verbindung selected = (Verbindung) parent.getItemAtPosition(position);
 
-                intent.putExtra("Bahnhof", selected.getEndBahnhof());
-                intent.putExtra("Verbindung", selected);
-                startActivity(intent);
-            }
+            intent.putExtra("Bahnhof", selected.getEndBahnhof());
+            intent.putExtra("Verbindung", selected);
+            startActivity(intent);
         };
-        ListView ka = findViewById(R.id.verbindungen);
-        ka.setOnItemClickListener(mListClickedHandler);
+        //seting the onItemClickListener for every ListItem
+        ListView listViewItem = findViewById(R.id.verbindungen);
+        listViewItem.setOnItemClickListener(mListClickedHandler);
     }
 
+    /**
+     * Method for checking if phone is connected to the Internet. Just copied from presentation.
+     * @return
+     */
     private boolean isNetworkConnectionAvailable() {
         ConnectivityManager connectivityService = (ConnectivityManager)
                 getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -177,6 +196,9 @@ public class Abfahrtsplan extends AppCompatActivity {
         return null != networkInfo && networkInfo.isConnected();
     }
 
+    /**
+     * Is called if clicked on Floating Action Button with Question Mark and opens HelpImpressum Activity.
+     */
     private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
         startActivity(intent);

@@ -10,6 +10,9 @@ import java.util.TimeZone;
 
 public class Verbindung implements Parcelable {
 
+    /**
+     * Creator for the Parcel. Used to give clicked Verbindung from the List in Abfahrtsplan to VerbindungDetails.
+     */
     public static final Creator<Verbindung> CREATOR = new Creator<Verbindung>() {
         @Override
         public Verbindung createFromParcel(Parcel in) {
@@ -21,8 +24,8 @@ public class Verbindung implements Parcelable {
             return new Verbindung[size];
         }
     };
-    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     static {
         dateFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
@@ -39,7 +42,7 @@ public class Verbindung implements Parcelable {
 
     }
 
-
+    //Method to write all the given Data with Parcel
     protected Verbindung(Parcel in) {
         startZeit = new Date(in.readLong());
         startBahnhof = in.readString();
@@ -52,14 +55,7 @@ public class Verbindung implements Parcelable {
         zugArt = in.readString();
     }
 
-    public String getZugArt() {
-        return zugArt;
-    }
-
-    public void setZugArt(String zugArt) {
-        this.zugArt = zugArt;
-    }
-
+    //Method to read the Verbindung written with Parcel
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(startZeit.getTime());
@@ -76,6 +72,14 @@ public class Verbindung implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getZugArt() {
+        return zugArt;
+    }
+
+    public void setZugArt(String zugArt) {
+        this.zugArt = zugArt;
     }
 
     public String getStartBahnhof() {

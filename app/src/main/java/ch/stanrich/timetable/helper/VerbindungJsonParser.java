@@ -9,13 +9,32 @@ import java.text.ParseException;
 import ch.stanrich.timetable.model.Bahnhof;
 import ch.stanrich.timetable.model.Verbindung;
 
+/**
+ * The type Verbindung json parser.
+ */
 public class VerbindungJsonParser {
 
+    /**
+     * The constant UNKNOWN_DATA.
+     * This is used if we get some null data from the API
+     */
     public final static String UNKNOWN_DATA = "unb.";
+    /**
+     * The constant INVALID_TIME.
+     * This is used when the Time we get from the API is null, so we can check if time is null and print UNKNOWN_DATA. See in Abfahrtsplan.
+     */
     public final static long INVALID_TIME = 0;
     private final static String STATION_KEY = "station";
     private final static String STATIONBOARD_KEY = "stationboard";
 
+    /**
+     * Create all Verbindungen for the corresponding Bahnhof with the given Data from the API-Call (timetableJsonString).
+     *
+     * @param timetableJsonString the timetable json string
+     * @return the bahnhof with a list of all Verbindungen
+     * @throws JSONException  the json exception
+     * @throws ParseException the parse exception
+     */
     public static Bahnhof createTimetableFromJsonString(String timetableJsonString) throws JSONException, ParseException {
         Bahnhof bahnhof = new Bahnhof();
 
@@ -31,6 +50,7 @@ public class VerbindungJsonParser {
 
         JSONArray stationboardArray = timetableObject.getJSONArray(STATIONBOARD_KEY);
         if (stationboardArray.length() > 0) {
+            //for every Verbindung in the stationBoardArray a new Verbindung Object is created and filled with the Data from the API
             for (int i = 0; i < stationboardArray.length(); i++) {
                 JSONObject stationboardObject = stationboardArray.getJSONObject(i);
                 Verbindung verbindung = new Verbindung();

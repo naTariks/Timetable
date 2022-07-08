@@ -17,10 +17,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        //Uncomment next Line to set App into Darkmode
+        /*AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);*/
+
+        //setting the Title Color in a cursed way
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">" + getString(R.string.app_name) + "</font>"));
     }
 
+    /**
+     * Sets on Click Listener for both Buttons.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -32,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         fltHelp.setOnClickListener(v -> fltOpenHelp());
     }
 
+    /**
+     * Opens Abfahrtsplan Activity and handsover the inserted Bahnhof
+     */
     private void btnGetAbfahrtsplan() {
         EditText inputBhf = findViewById(R.id.bahnhofInput);
         String bahnhof = inputBhf.getText().toString();
@@ -40,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Is called if clicked on Floating Action Button with Question Mark and opens HelpImpressum Activity.
+     */
     private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
         startActivity(intent);
