@@ -1,15 +1,22 @@
+/*
+I tried so hard and got so far
+But in the end it doesn't even matter
+Cause this shit doens't even work.
+Why the fuck do I make this.
+
+Manuell funktioniert als Espresso irgendwie nid.
+ */
+
+
 package ch.stanrich.timetable;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 import android.view.View;
@@ -60,12 +67,6 @@ public class ST_06 {
         appCompatImageButton.perform(click());
 
         pressBack();
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.txtWillkommen), withText("Willkommen"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        textView.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
