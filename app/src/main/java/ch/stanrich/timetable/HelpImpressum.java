@@ -1,11 +1,11 @@
 package ch.stanrich.timetable;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HelpImpressum extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class HelpImpressum extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if(itemId== android.R.id.home) {
+        if (itemId == android.R.id.home) {
             onBackPressed();
             return true;
         }

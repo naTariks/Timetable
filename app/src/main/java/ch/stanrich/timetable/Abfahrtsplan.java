@@ -1,25 +1,23 @@
 package ch.stanrich.timetable;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 
@@ -39,9 +38,9 @@ import ch.stanrich.timetable.model.Verbindung;
 
 public class Abfahrtsplan extends AppCompatActivity {
 
+    private final String TRANSPORT_API_URL = "https://transport.opendata.ch/v1/stationboard?station=";
     private ProgressBar progressBar;
     private String bahnhof;
-    private final String TRANSPORT_API_URL = "https://transport.opendata.ch/v1/stationboard?station=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +68,7 @@ public class Abfahrtsplan extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if(itemId == android.R.id.home) {
+        if (itemId == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -81,14 +80,16 @@ public class Abfahrtsplan extends AppCompatActivity {
         super.onStart();
         if (!isNetworkConnectionAvailable()) {
             generateAlertDialog(1);
-        }
-        else {
+        } else {
             getVerbindungenVon(bahnhof.toLowerCase());
         }
 
+        FloatingActionButton fltHelp = findViewById(R.id.fltHelp);
+        fltHelp.setOnClickListener(v -> fltOpenHelp());
+
     }
 
-    public void generateAlertDialog(int id){
+    public void generateAlertDialog(int id) {
         progressBar.setVisibility(View.GONE);
         AlertDialog.Builder dialogBuilder;
         dialogBuilder = new AlertDialog.Builder(this);
@@ -128,7 +129,7 @@ public class Abfahrtsplan extends AppCompatActivity {
                 try {
                     Bahnhof bahnhof = VerbindungJsonParser.createTimetableFromJsonString(response);
 
-                    if(bahnhof.getVerbindung().isEmpty()) {
+                    if (bahnhof.getVerbindung().isEmpty()) {
                         generateAlertDialog(2);
                     }
 
@@ -139,7 +140,7 @@ public class Abfahrtsplan extends AppCompatActivity {
                 } catch (JSONException e) {
                     generateAlertDialog(2);
 
-                }catch (ParseException e) {
+                } catch (ParseException e) {
                     generateAlertDialog(3);
                     Log.e(VerbindungJsonParser.class.getName(), "Time from API not parseable anymore", e);
                 }
@@ -156,7 +157,7 @@ public class Abfahrtsplan extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), VerbindungsDetail.class);
-                Verbindung selected = (Verbindung)parent.getItemAtPosition(position);
+                Verbindung selected = (Verbindung) parent.getItemAtPosition(position);
 
                 intent.putExtra("Bahnhof", selected.getEndBahnhof());
                 intent.putExtra("Verbindung", selected);
@@ -176,7 +177,7 @@ public class Abfahrtsplan extends AppCompatActivity {
         return null != networkInfo && networkInfo.isConnected();
     }
 
-    public void btnHelpClicked(View view) {
+    private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
         startActivity(intent);
     }

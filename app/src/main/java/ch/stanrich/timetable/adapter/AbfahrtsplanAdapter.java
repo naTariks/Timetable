@@ -1,20 +1,16 @@
 package ch.stanrich.timetable.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import ch.stanrich.timetable.R;
-import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Bahnhof;
 import ch.stanrich.timetable.model.Verbindung;
 
@@ -24,6 +20,7 @@ public class AbfahrtsplanAdapter extends ArrayAdapter<Verbindung> {
     public static final String NACH = "nach ";
 
     private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
+
     static {
         hourminutesFormatter.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
     }

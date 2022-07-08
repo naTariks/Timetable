@@ -8,5 +8,5 @@
     <string name="hilfeTitle">Hilfe</string>
     <string name="hilfeText">Diese App dient dazu, für den eingegebenen Bahnhof, die nächsten Verbindungen anzuzeigen. Die Daten stammen von der Transport-API von Open Data. https://transport.opendata.ch \nFalls bei gewissen Daten unb. steht, so heisst dies, dass diese Daten noch nicht bekannt sind (unbekannt).</string>
     <string name="impressumTitle">Impressum</string>
-    <string name="impressumText">Autoren: Veselin &amp; Nathan\nDieses Projekt entstand als Projektarbeit im üK Modul 335. Der Source Code ist unter \nhttps://github.com/naTariks/Timetabl \nzu finden. \nKontaktadresse bei Problemen oder Vorschlägen: \nnathanrichard[at]bluewin.ch</string>
+    <string name="impressumText">Autoren: Veselin &amp; Nathan\nDieses Projekt entstand als Projektarbeit im üK Modul 335. Der Source Code ist unter \nhttps://github.com/naTariks/Timetable \nzu finden. \nKontaktadresse bei Problemen oder Vorschlägen: \nnathanrichard@bluewin.ch</string>
 </resources>

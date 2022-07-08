@@ -1,15 +1,14 @@
 package ch.stanrich.timetable;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.View;
-
-import android.view.View.OnKeyListener;
+import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +21,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">" + getString(R.string.app_name) + "</font>"));
     }
 
-    public void btnGoClicked(View view) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Button btnGo = findViewById(R.id.btnGo);
+        btnGo.setOnClickListener(v -> btnGetAbfahrtsplan());
+
+        FloatingActionButton fltHelp = findViewById(R.id.fltHelp);
+        fltHelp.setOnClickListener(v -> fltOpenHelp());
+    }
+
+    private void btnGetAbfahrtsplan() {
         EditText inputBhf = findViewById(R.id.bahnhofInput);
         String bahnhof = inputBhf.getText().toString();
         Intent intent = new Intent(this, Abfahrtsplan.class);
@@ -30,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void btnHelpClicked(View view) {
+    private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
         startActivity(intent);
     }

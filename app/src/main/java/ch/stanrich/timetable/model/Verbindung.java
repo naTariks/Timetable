@@ -2,26 +2,27 @@ package ch.stanrich.timetable.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import androidx.core.util.TimeUtils;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import ch.stanrich.timetable.R;
-import ch.stanrich.timetable.helper.VerbindungJsonParser;
-
 public class Verbindung implements Parcelable {
 
+    public static final Creator<Verbindung> CREATOR = new Creator<Verbindung>() {
+        @Override
+        public Verbindung createFromParcel(Parcel in) {
+            return new Verbindung(in);
+        }
+
+        @Override
+        public Verbindung[] newArray(int size) {
+            return new Verbindung[size];
+        }
+    };
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
     static {
         dateFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
@@ -29,23 +30,12 @@ public class Verbindung implements Parcelable {
     private Date startZeit;
     private String startBahnhof;
     private String startGleis;
-
     private Date endZeit;
     private String endBahnhof;
     private String endGleis;
-
-    public String getZugArt() {
-        return zugArt;
-    }
-
-    public void setZugArt(String zugArt) {
-        this.zugArt = zugArt;
-    }
-
     private String zugArt;
 
-
-    public Verbindung(){
+    public Verbindung() {
 
     }
 
@@ -60,6 +50,14 @@ public class Verbindung implements Parcelable {
         endGleis = in.readString();
 
         zugArt = in.readString();
+    }
+
+    public String getZugArt() {
+        return zugArt;
+    }
+
+    public void setZugArt(String zugArt) {
+        this.zugArt = zugArt;
     }
 
     @Override
@@ -79,18 +77,6 @@ public class Verbindung implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<Verbindung> CREATOR = new Creator<Verbindung>() {
-        @Override
-        public Verbindung createFromParcel(Parcel in) {
-            return new Verbindung(in);
-        }
-
-        @Override
-        public Verbindung[] newArray(int size) {
-            return new Verbindung[size];
-        }
-    };
 
     public String getStartBahnhof() {
         return startBahnhof;
@@ -132,7 +118,7 @@ public class Verbindung implements Parcelable {
         return endZeit;
     }
 
-    public void setEndZeit(String time) throws ParseException{
+    public void setEndZeit(String time) throws ParseException {
         this.endZeit = dateFormatter.parse(time);
     }
 

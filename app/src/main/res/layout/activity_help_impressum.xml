@@ -4,65 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelpImpressum"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".HelpImpressum">
 
     <TextView
         android:id="@+id/txtHelpTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hilfeTitle"
         android:layout_marginTop="13dp"
+        android:text="@string/hilfeTitle"
 
-        android:textSize="20dp"
         android:textColor="@color/black"
+        android:textSize="20dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hilfeText"
-
-        android:textSize="16dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHelpTitle"
+        android:layout_marginTop="18dp"
 
         android:autoLink="web"
-        android:layout_marginTop="18dp"/>
+
+        android:text="@string/hilfeText"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHelpTitle" />
 
     <TextView
         android:id="@+id/txtImpressumTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/impressumTitle"
+        android:layout_marginTop="33dp"
 
-        android:textSize="20dp"
+        android:text="@string/impressumTitle"
         android:textColor="@color/black"
 
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHelp"
 
-        android:layout_marginTop="33dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtHelp" />
 
     <TextView
         android:id="@+id/txtImpressum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/impressumText"
-
-        android:textSize="16dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtImpressumTitle"
+        android:layout_marginTop="18dp"
 
         android:autoLink="web"
-        android:layout_marginTop="18dp"/>
+
+        android:text="@string/impressumText"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtImpressumTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
