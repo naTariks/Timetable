@@ -7,7 +7,7 @@ public class Bahnhof {
 
     private int id;
     private String name;
-    private List<Verbindung> verbindungen;
+    private final List<Verbindung> verbindungen;
 
     public Bahnhof() {
         this.verbindungen = new ArrayList<>();

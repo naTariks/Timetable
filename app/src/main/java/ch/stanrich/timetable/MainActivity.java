@@ -24,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#323437\">" + getString(R.string.app_name) + "</font>"));
     }
 
-    /**
-     * Sets on Click Listener for both Buttons.
-     */
     @Override
     protected void onStart() {
         super.onStart();

@@ -20,9 +20,6 @@ import ch.stanrich.timetable.adapter.AbfahrtsplanAdapter;
 import ch.stanrich.timetable.helper.VerbindungJsonParser;
 import ch.stanrich.timetable.model.Verbindung;
 
-/**
- * The type Verbindungs detail.
- */
 public class VerbindungsDetail extends AppCompatActivity {
 
     private static final SimpleDateFormat hourminutesFormatter = new SimpleDateFormat("HH:mm");
@@ -58,9 +55,6 @@ public class VerbindungsDetail extends AppCompatActivity {
         addInfos();
     }
 
-    /**
-     * Sets Click Listener for the Floating Action Button
-     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -113,11 +107,6 @@ public class VerbindungsDetail extends AppCompatActivity {
 
     }
 
-    /**
-     * Is responsible for going one Activity Back if clicked on UpButton
-     * @param item
-     * @return
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();

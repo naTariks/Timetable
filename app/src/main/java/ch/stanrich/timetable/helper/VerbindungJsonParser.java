@@ -9,9 +9,6 @@ import java.text.ParseException;
 import ch.stanrich.timetable.model.Bahnhof;
 import ch.stanrich.timetable.model.Verbindung;
 
-/**
- * The type Verbindung json parser.
- */
 public class VerbindungJsonParser {
 
     /**
@@ -21,7 +18,7 @@ public class VerbindungJsonParser {
     public final static String UNKNOWN_DATA = "unb.";
     /**
      * The constant INVALID_TIME.
-     * This is used when the Time we get from the API is null, so we can check if time is null and print UNKNOWN_DATA. See in Abfahrtsplan.
+     * This is used when the Time we get from the API is null, so we can check in {@link ch.stanrich.timetable.Abfahrtsplan} if time is null and print UNKNOWN_DATA.
      */
     public final static long INVALID_TIME = 0;
     private final static String STATION_KEY = "station";

@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,7 +35,7 @@ import ch.stanrich.timetable.model.Bahnhof;
 import ch.stanrich.timetable.model.Verbindung;
 
 /**
- * The type Abfahrtsplan.
+ * The Abfahrtsplan is a list of departures from the selected Bahnhof.
  */
 public class Abfahrtsplan extends AppCompatActivity {
 
@@ -68,11 +67,6 @@ public class Abfahrtsplan extends AppCompatActivity {
         }
     }
 
-    /**
-     * Is responsible for going one Activity Back if clicked on UpButton
-     * @param item
-     * @return
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -83,14 +77,11 @@ public class Abfahrtsplan extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Calls isNetworkConnectionAvailable() and generates an Alert if not. Set Click Listener for Floating Action Button.
-     */
     @Override
     protected void onStart() {
         super.onStart();
         if (!isNetworkConnectionAvailable()) {
-            generateAlertDialog(1);
+            generateAlertDialog(ErrorType.NO_INTERNET);
         } else {
             getVerbindungenVon(bahnhof.toLowerCase());
         }
@@ -103,9 +94,9 @@ public class Abfahrtsplan extends AppCompatActivity {
     /**
      * Generate an Alert and looks with the given param what the problem is and returns an error Message for the specific problem
      *
-     * @param id the id
+     * @param type the ErroryType according to the Enum
      */
-    public void generateAlertDialog(int id) {
+    public void generateAlertDialog(ErrorType type) {
         //Building the AlertDialog and hide the ProgressBar
         progressBar.setVisibility(View.GONE);
         AlertDialog.Builder dialogBuilder;
@@ -116,17 +107,17 @@ public class Abfahrtsplan extends AppCompatActivity {
                 finish();
             }
         });
-        switch (id) {
-            case 1: //No Internet
+        switch (type) {
+            case NO_INTERNET:
                 dialogBuilder.setMessage("Es konnte keine Verbindung zum Internet hergestellt werden. Versuchen Sie es später nochmals").setTitle("Fehler");
                 break;
-            case 2: //Given Bahnhof not found
+            case FALSE_BAHNHOF:
                 dialogBuilder.setMessage("Der eingegebene Bahnhof, " + bahnhof + ", konnte nicht gefunden werden.").setTitle("Fehler");
                 break;
-            case 3: //Systemfehler, Actually just a problem with parsing the departure or arrival Time
+            case TIME_NOT_PARSABLE:
                 dialogBuilder.setMessage("Systemfehler. Bitte wenden Sie sich an einen Entwickler.").setTitle("Fehler");
                 break;
-            default: //Any other Error. Not used at the moment
+            default:
                 dialogBuilder.setMessage("Leider ist ein Fehler aufgetretten. Versuchen Sie es später nochmals.").setTitle("Fehler");
                 break;
         }
@@ -135,9 +126,9 @@ public class Abfahrtsplan extends AppCompatActivity {
     }
 
     /**
-     * Gets Verbindungen for inserted Bahnhof with calling the API and call the JSON Parser. Handles also the JSONException and a ParseException.
+     * Gets Verbindungen for inserted Bahnhof by calling the <a href="https://transport.opendata.ch">opentransport API</a>
      *
-     * @param abfahrtsOrt the abfahrts ort
+     * @param abfahrtsOrt the name of the station we want to look up
      */
     public void getVerbindungenVon(String abfahrtsOrt) {
         String requestUrl = STATIONBOARD_STATION_API_URL + abfahrtsOrt;
@@ -152,7 +143,7 @@ public class Abfahrtsplan extends AppCompatActivity {
                 Bahnhof bahnhof = VerbindungJsonParser.createTimetableFromJsonString(response);
 
                 if (bahnhof.getVerbindungen().isEmpty()) {
-                    generateAlertDialog(2);
+                    generateAlertDialog(ErrorType.FALSE_BAHNHOF);
                 }
 
                 verbindungInfosAdapter.addAll(bahnhof.getVerbindungen());
@@ -160,13 +151,13 @@ public class Abfahrtsplan extends AppCompatActivity {
                 timeTable.setAdapter(verbindungInfosAdapter);
                 progressBar.setVisibility(View.GONE);
             } catch (JSONException e) {
-                generateAlertDialog(2);
+                generateAlertDialog(ErrorType.FALSE_BAHNHOF);
 
             } catch (ParseException e) {
-                generateAlertDialog(3);
+                generateAlertDialog(ErrorType.TIME_NOT_PARSABLE);
                 Log.e(VerbindungJsonParser.class.getName(), "Time from API not parsable anymore", e);
             }
-        }, error -> generateAlertDialog(2));
+        }, error -> generateAlertDialog(ErrorType.FALSE_BAHNHOF));
         queue.add(stringRequest);
 
         //Definition on what happens when clicked on ListItem
@@ -185,7 +176,8 @@ public class Abfahrtsplan extends AppCompatActivity {
 
     /**
      * Method for checking if phone is connected to the Internet. Just copied from presentation.
-     * @return
+     *
+     * @return <code>false</code> no network connection could be established OR if there's no networking devices
      */
     private boolean isNetworkConnectionAvailable() {
         ConnectivityManager connectivityService = (ConnectivityManager)
@@ -202,6 +194,13 @@ public class Abfahrtsplan extends AppCompatActivity {
     private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
         startActivity(intent);
+    }
+
+    public enum ErrorType {
+        NO_INTERNET,
+        FALSE_BAHNHOF,
+        TIME_NOT_PARSABLE,
+        DEFAULT_ERROR
     }
 
 }

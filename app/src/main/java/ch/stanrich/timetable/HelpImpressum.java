@@ -24,11 +24,6 @@ public class HelpImpressum extends AppCompatActivity {
         }
     }
 
-    /**
-     * Is responsible for going one Activity Back if clicked on UpButton
-     * @param item
-     * @return
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();

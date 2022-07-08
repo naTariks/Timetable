@@ -26,6 +26,7 @@ public class Verbindung implements Parcelable {
     };
 
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
     static {
         dateFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
