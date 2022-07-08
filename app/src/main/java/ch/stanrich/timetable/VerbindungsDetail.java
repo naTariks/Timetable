@@ -2,9 +2,11 @@ package ch.stanrich.timetable;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -61,6 +63,9 @@ public class VerbindungsDetail extends AppCompatActivity {
 
         FloatingActionButton fltHelp = findViewById(R.id.fltHelp);
         fltHelp.setOnClickListener(v -> fltOpenHelp());
+
+        ImageView mgvWerbung = findViewById(R.id.werbung);
+        mgvWerbung.setOnClickListener(v -> mgvWerbungOpenSpotify());
     }
 
     /**
@@ -122,6 +127,18 @@ public class VerbindungsDetail extends AppCompatActivity {
      */
     private void fltOpenHelp() {
         Intent intent = new Intent(this, HelpImpressum.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Is called if clicked on Ad and opens the corresponding Spotify Songssite
+     */
+    private void mgvWerbungOpenSpotify() {
+        String url = "https://open.spotify.com/track/55DOrWJRLTaIyAMm8hxNbq?autoplay=true";
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(url));
         startActivity(intent);
     }
 

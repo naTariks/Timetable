@@ -3,8 +3,11 @@ package ch.stanrich.timetable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fltHelp = findViewById(R.id.fltHelp);
         fltHelp.setOnClickListener(v -> fltOpenHelp());
+
+        TextView txtBahnhof = findViewById(R.id.bahnhofInput);
+        txtBahnhof.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                btnGetAbfahrtsplan();
+            }
+            return false;
+        });
     }
 
     /**
