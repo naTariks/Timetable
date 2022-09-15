@@ -30,5 +30,5 @@ To install **Timetable**, follow this steps:
 So just enter a train station in Switzerland and see what happens.
   
 ## Credits & Dependencies
-Credits to [Veselin](https://github.com/ByVEVE) for working with me on this projekt.
-Credits to Michael our coach who helped us a lot.
+* Credits to [Veselin](https://github.com/ByVEVE) for working with me on this projekt.
+* Credits to [Michael](https://github.com/dotSp0T) our coach who helped us a lot.
